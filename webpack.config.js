@@ -1,30 +1,30 @@
 /**
  * Webpack client-side config file
  */
-const path = require( 'path' );
-const webpack = require( 'webpack' );
-const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
-const isProd = ( process.env.NODE_ENV === 'production' );
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const isProd = (process.env.NODE_ENV === 'production');
 
 // dev server and globals styles
-const serverHost = 'localhost';
+const serverHost = '142.132.165.242';
 const serverPort = 8000;
-const serverRoot = path.join( __dirname, '/' );
-const appEntry   = './src/app.js';
-const bundleDir  = './public/bundles/';
+const serverRoot = path.join(__dirname, '/');
+const appEntry = './src/app.js';
+const bundleDir = './public/bundles/';
 const globalSass = './src/scss/globals.scss';
 
 // get loader config based on env
-const getLoaders = ( prod ) => {
-  let loaders  = [ 'vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader' ];
+const getLoaders = (prod) => {
+  let loaders = ['vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader'];
   let fallback = prod ? loaders.shift() : '';
-  let use      = loaders.join( '!' ) +'?data=@import "'+ globalSass +'";'
+  let use = loaders.join('!') + '?data=@import "' + globalSass + '";'
   return prod
-    ? { scss: ExtractTextPlugin.extract( { use, fallback } ) }
+    ? { scss: ExtractTextPlugin.extract({ use, fallback }) }
     : { scss: use };
 }
 
- // webpack config
+// webpack config
 module.exports = {
 
   entry: {
@@ -33,7 +33,7 @@ module.exports = {
 
   output: {
     path: serverRoot,
-    filename: path.join( bundleDir, '[name].min.js' ),
+    filename: path.join(bundleDir, '[name].min.js'),
   },
 
   stats: {
@@ -49,7 +49,7 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: { loaders: getLoaders( isProd ) }
+        options: { loaders: getLoaders(isProd) }
       },
       {
         test: /\.js$/,
@@ -60,7 +60,7 @@ module.exports = {
   },
 
   plugins: [
-    new ExtractTextPlugin( path.join( bundleDir, '[name].min.css' ) )
+    new ExtractTextPlugin(path.join(bundleDir, '[name].min.css'))
   ],
 
   resolve: {
@@ -86,7 +86,7 @@ module.exports = {
   }
 }
 
-if ( isProd ) {
+if (isProd) {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
