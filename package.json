@@ -14,6 +14,7 @@
     "not ie <= 8"
   ],
   "dependencies": {
+    "http-serve": "^1.0.1",
     "serve": "^13.0.2",
     "vue": "^2.5.22",
     "webpack-serve": "^4.0.0"
